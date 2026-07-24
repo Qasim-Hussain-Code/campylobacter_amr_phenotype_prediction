@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
-"""Build the Chapter 1 cohort from NCBI Pathogen Detection metadata.
+"""Build a Chapter 1 cohort from NCBI Pathogen Detection metadata.
 
-Filters Campylobacter isolates to those with a measured tetracycline
-phenotype and a linked genome assembly, then attaches SNP cluster
-assignments for use in grouped splitting.
+Filters Campylobacter isolates to those with a measured phenotype for one
+drug and a linked genome assembly, then attaches SNP cluster assignments
+for use in grouped splitting.
 
-Outputs data/interim/cohort.parquet
+Usage:
+    python scripts/02_build_cohort.py [drug]
+
+Reads   data/raw/<PDG>.metadata.tsv
+        data/raw/<PDG>.cluster_list.tsv
+Writes  data/interim/cohort_<drug>.parquet
 """
 
 from pathlib import Path
@@ -16,8 +21,6 @@ PDG = "PDG000000003.2859"
 ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw"
 INTERIM = ROOT / "data" / "interim"
-
-DRUG = "tetracycline"
 
 USE_COLS = [
     "target_acc",
@@ -38,8 +41,10 @@ def parse_ast(field, drug):
     The field looks like:
         "azithromycin=S,ciprofloxacin=S,nalidixic acid=S,tetracycline=R"
 
-    Quotes are part of the stored value. Drug names may contain spaces.
-    Returns None when the field is absent or the drug was not tested.
+    Quotes are part of the stored value and drug names may contain spaces,
+    so the string is unquoted, split on commas, then each pair split on its
+    first equals sign only. Returns None when the field is absent or this
+    drug was not tested on that isolate.
     """
     if not isinstance(field, str) or field in ("", "NULL"):
         return None
@@ -53,6 +58,9 @@ def parse_ast(field, drug):
 
 
 def main():
+    drug = sys.argv[1] if len(sys.argv) > 1 else "tetracycline"
+    slug = drug.replace(" ", "_")
+
     meta_path = RAW / f"{PDG}.metadata.tsv"
     clust_path = RAW / f"{PDG}.cluster_list.tsv"
 
@@ -60,6 +68,7 @@ def main():
         if not p.exists():
             sys.exit(f"[fail] missing {p}. Run 01_fetch_ncbi_metadata.sh first.")
 
+    print(f"[drug] {drug}")
     print(f"[read] {meta_path.name}")
     meta = pd.read_csv(
         meta_path,
@@ -69,13 +78,15 @@ def main():
         na_values=["NULL"],
         low_memory=False,
     )
-    print(f"       {len(meta):,} isolates in release")
+    print(f"       {len(meta):,} isolates in release {PDG}")
 
-    meta[DRUG] = meta["AST_phenotypes"].apply(lambda s: parse_ast(s, DRUG))
+    meta[drug] = meta["AST_phenotypes"].apply(lambda s: parse_ast(s, drug))
 
-    cohort = meta[meta[DRUG].notna()].copy()
-    print(f"[filt] {len(cohort):,} with a {DRUG} result")
-    print(cohort[DRUG].value_counts().to_string())
+    cohort = meta[meta[drug].notna()].copy()
+    if cohort.empty:
+        sys.exit(f"[fail] no isolate has a {drug} result. Check the drug name.")
+    print(f"[filt] {len(cohort):,} with a {drug} result")
+    print(cohort[drug].value_counts().to_string())
 
     cohort = cohort[cohort["asm_acc"].notna()].copy()
     print(f"[filt] {len(cohort):,} of those with an assembly")
@@ -92,16 +103,21 @@ def main():
 
     before = len(cohort)
     cohort = cohort.merge(clusters, on="asm_acc", how="left", validate="one_to_one")
-    assert len(cohort) == before, "merge changed row count"
+    assert len(cohort) == before, "merge changed the row count"
 
     missing = cohort["snp_cluster"].isna().sum()
     print(f"[join] {missing:,} isolates have no SNP cluster")
 
     assert cohort["asm_acc"].is_unique, "duplicate assembly accessions"
-    assert cohort[DRUG].isin(["S", "I", "R"]).all(), "unexpected phenotype code"
+    assert cohort[drug].isin(["S", "I", "R"]).all(), "unexpected phenotype code"
+
+    n_intermediate = (cohort[drug] == "I").sum()
+    if n_intermediate:
+        print(f"[warn] {n_intermediate:,} isolates called intermediate (I).")
+        print("       Decide how to handle these before modelling.")
 
     INTERIM.mkdir(parents=True, exist_ok=True)
-    out = INTERIM / "cohort.parquet"
+    out = INTERIM / f"cohort_{slug}.parquet"
     cohort.to_parquet(out, index=False)
 
     print(f"\n[done] wrote {out.relative_to(ROOT)}")

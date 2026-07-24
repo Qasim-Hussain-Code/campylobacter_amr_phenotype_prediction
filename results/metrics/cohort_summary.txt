@@ -1,0 +1,37 @@
+Cohort: 3,983 isolates
+
+== Class balance ==
+tetracycline
+S    2081
+R    1902
+majority-class baseline accuracy: 0.522
+
+== SNP cluster structure ==
+isolates with a cluster: 3,519
+isolates without:        464
+distinct clusters:       32
+largest cluster:         59 isolates
+median cluster size:     2
+singleton clusters:      560
+largest five clusters:
+snp_cluster
+PDS000245112.75     59
+PDS000243340.69     54
+PDS000233735.13     51
+PDS000022832.251    43
+PDS000021482.70     41
+
+== Genotype vs measured phenotype ==
+tetracycline     R     S
+teto                    
+False           13  2067
+True          1889    14
+
+tet(O) present and resistant     (TP): 1,889
+tet(O) absent  but resistant     (FN): 13
+tet(O) present but susceptible   (FP): 14
+tet(O) absent  and susceptible   (TN): 2,067
+
+sensitivity: 0.993
+specificity: 0.993
+accuracy:    0.993
