@@ -1,0 +1,17 @@
+data/raw/*
+data/interim/*
+data/processed/*
+!data/**/.gitkeep
+!data/README.md
+
+models/*
+!models/.gitkeep
+
+results/figures/*
+!results/figures/.gitkeep
+
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.DS_Store
+*.log
