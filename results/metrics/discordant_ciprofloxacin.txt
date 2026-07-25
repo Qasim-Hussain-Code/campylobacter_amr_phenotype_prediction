@@ -1,0 +1,46 @@
+Drug:   ciprofloxacin
+Marker: gyrA_T86I
+Cohort: 3,984 isolates
+
+============================================================
+RESISTANT on the plate, no gyrA_T86I detected: 16
+============================================================
+Some other mechanism, a marker this rule does not cover,
+an assembly that missed the gene, or a plate error.
+
+Related genes present in these isolates:
+     8  gyrA_T86V=POINT
+     1  gyrA_T86K=POINT
+
+Isolates with no AMR genes called at all: 0
+
+Full genotype strings:
+  GCA_005289865.1  blaOXA-193,gyrA_T86V=POINT,tet(O)
+  GCA_005292345.1  blaOXA-193,tet(O)
+  GCA_005292725.1  blaOXA-193,tet(O)
+  GCA_005297505.1  blaOXA-193,tet(O)
+  GCA_005297945.1  blaOXA-193,gyrA_T86K=POINT,tet(O)
+  GCA_005199195.1  blaOXA-493,gyrA_T86V=POINT
+  GCA_005326385.1  blaOXA-493,gyrA_T86V=POINT
+  GCA_005326525.1  blaOXA-493,gyrA_T86V=POINT
+  GCA_005330085.1  blaOXA-193,tet(O)
+  GCA_005333285.1  blaOXA-493,gyrA_T86V=POINT
+  GCA_005358805.1  aph(3')-IIIa,tet(O)
+  GCA_005361245.1  gyrA_T86V=POINT
+  GCA_004876765.1  gyrA_T86V=POINT
+  GCA_018175995.1  blaOXA-493,gyrA_T86V=POINT
+  GCA_014606715.1  blaOXA,blaOXA-184,rplV_A103V=POINT
+  GCA_050712695.1  tet(O)
+
+============================================================
+SUSCEPTIBLE on the plate, gyrA_T86I detected: 2
+============================================================
+A disrupted or non-expressed gene, an MIC sitting just below
+the breakpoint, or a plate error.
+
+Full genotype strings:
+  GCA_005291305.1  blaOXA-193,gyrA_T86I=POINT,tet(O)
+  GCA_034216935.2  aph(3')-VIIa=PARTIAL,gyrA_T86I=POINT,rplV_A103V=POINT,tet(O)
+
+Total disagreements: 18 of 3,984 (0.5%)
+Ceiling for any model using this feature alone: 0.995

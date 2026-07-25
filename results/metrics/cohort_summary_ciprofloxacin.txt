@@ -1,0 +1,40 @@
+Drug:   ciprofloxacin
+Marker: gyrA_T86I
+Cohort: 3,984 isolates
+
+== Class balance ==
+ciprofloxacin
+S    3160
+R     824
+majority-class baseline accuracy: 0.793
+
+== SNP cluster structure ==
+isolates with a cluster: 3,520
+isolates without:        464
+distinct clusters:       1,128
+largest cluster:         59 isolates
+median cluster size:     2
+singleton clusters:      560
+largest five clusters:
+snp_cluster
+PDS000245112.75     59
+PDS000243340.69     54
+PDS000233735.13     51
+PDS000022832.251    43
+PDS000021482.70     41
+
+== Marker vs measured phenotype ==
+ciprofloxacin    R     S
+marker                  
+False           16  3158
+True           808     2
+
+marker present, resistant    (TP): 808
+marker absent,  resistant    (FN): 16
+marker present, susceptible  (FP): 2
+marker absent,  susceptible  (TN): 3,158
+
+sensitivity: 0.981
+specificity: 0.999
+accuracy:    0.995
+errors:      18 of 3,984

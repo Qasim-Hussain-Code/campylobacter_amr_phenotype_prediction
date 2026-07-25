@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Describe the Chapter 1 cohort before any modelling.
+"""Describe a Chapter 1 cohort before any modelling.
 
 Reports class balance, SNP cluster structure, and the agreement between a
 single AMRFinderPlus marker and the measured phenotype for one drug.
@@ -19,8 +19,6 @@ ROOT = Path(__file__).resolve().parent.parent
 INTERIM = ROOT / "data" / "interim"
 METRICS = ROOT / "results" / "metrics"
 
-# The AMRFinderPlus marker conventionally associated with each drug.
-# Matched as a prefix against comma-separated entries in AMR_genotypes.
 MARKERS = {
     "tetracycline": "tet(",
     "ciprofloxacin": "gyrA_T86I",
