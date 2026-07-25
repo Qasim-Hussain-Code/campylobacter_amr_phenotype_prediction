@@ -1,0 +1,30 @@
+Drug:      ciprofloxacin
+Cohort:    3,984 isolates, 824 resistant
+Vocabulary: 84 distinct gene entries
+Scheme:    5-fold x 3 repeats = 15 folds per scheme
+
+ min  feats  rule cols  rule rand  log rand  rule grp   log grp  pass
+---------------------------------------------------------------------
+   1     84          4     0.9967    0.9960    0.9967    0.9957     6
+   3     58          3     0.9965    0.9960    0.9964    0.9957     3
+   5     48          2     0.9975    0.9960    0.9974    0.9957     2
+  10     39          1     0.9955    0.9955    0.9954    0.9954     0
+  20     26          1     0.9955    0.9955    0.9954    0.9954     0
+
+rule cols = how many gyrA position-86 features survive the filter
+pass      = admitted features with no mechanistic link that occur
+            only in isolates already flagged by the rule
+
+==================================================================
+PASSENGERS BY THRESHOLD
+==================================================================
+min   1: cmeB (n=6), blaOXA-493 (n=5), aph(2'')-IIIa (n=4), aph(2'')-If=PARTIAL (n=1), catA13 (n=1), porA_N138ND=POINT (n=1)
+min   3: cmeB (n=6), blaOXA-493 (n=5), aph(2'')-IIIa (n=4)
+min   5: cmeB (n=6), blaOXA-493 (n=5)
+min  10: none
+min  20: none
+
+A passenger is not a modelling error. It is a real correlation in
+the data. The model cannot distinguish it from a cause using
+presence and absence alone, which is why the mechanism has to
+come from outside the dataset.
