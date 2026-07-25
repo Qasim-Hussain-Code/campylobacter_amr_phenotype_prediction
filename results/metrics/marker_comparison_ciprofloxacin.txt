@@ -1,0 +1,15 @@
+Drug:     ciprofloxacin
+Cohort:   3,984 isolates (824 resistant)
+Baseline: always guess the majority class
+          824 errors, accuracy 0.7932
+
+feature definition            TP    FN    FP     TN    sens    spec     acc   err
+---------------------------------------------------------------------------------
+gyrA_T86I only               808    16     2   3158   0.981   0.999  0.9955    18
+any change at gyrA 86        817     7     6   3154   0.992   0.998  0.9967    13
+any gyrA change              817     7     6   3154   0.992   0.998  0.9967    13
+
+Note: these definitions were chosen on mechanistic grounds before
+scoring, not selected by whichever performed best. Choosing a
+feature by its score on the full dataset is a form of overfitting,
+and the reported accuracy would no longer be honest.

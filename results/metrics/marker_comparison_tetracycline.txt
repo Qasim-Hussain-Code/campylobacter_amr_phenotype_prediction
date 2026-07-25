@@ -1,0 +1,14 @@
+Drug:     tetracycline
+Cohort:   3,983 isolates (1,902 resistant)
+Baseline: always guess the majority class
+          1,902 errors, accuracy 0.5225
+
+feature definition            TP    FN    FP     TN    sens    spec     acc   err
+---------------------------------------------------------------------------------
+tet(O) only                 1884    18    14   2067   0.991   0.993  0.9920    32
+any tet gene                1889    13    14   2067   0.993   0.993  0.9932    27
+
+Note: these definitions were chosen on mechanistic grounds before
+scoring, not selected by whichever performed best. Choosing a
+feature by its score on the full dataset is a form of overfitting,
+and the reported accuracy would no longer be honest.
