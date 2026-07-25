@@ -2,20 +2,107 @@ Drug:     tetracycline
 Cohort:   3,983 isolates, 1,902 resistant (47.8%)
 Prefixes: ['tet(', 'cmeB', 'cmeR']
 
-variant                          n     R     S     % R  alone
--------------------------------------------------------------
-cmeB                             6     6     0   100%      6
-tet(O)                        1890  1882     8   100%   1862
-tet(O)=MISTRANSLATION            7     6     1    86%      0
-tet(O)=PARTIAL                  17    11     6    65%      4
-tet(O)=PARTIAL_END_OF_CONTIG    15    14     1    93%      1
-tet(O/M/O)                       4     4     0   100%      4
-tet(O/W/32/O)                    1     1     0   100%      1
+variant                           n     R    S     % R  alone  clust
+--------------------------------------------------------------------
+cmeB                              6     6    0 100.0%      6      5
+tet(O)                         1890  1882    8  99.6%   1862    835
+tet(O)=MISTRANSLATION             7     6    1  85.7%      0      6
+tet(O)=PARTIAL                   17    11    6  64.7%      4     17
+tet(O)=PARTIAL_END_OF_CONTIG     15    14    1  93.3%      1     14
+tet(O/M/O)                        4     4    0 100.0%      4      3
+tet(O/W/32/O)                     1     1    0 100.0%      1      1
 
-alone = isolates carrying this variant and no other from the
-        same gene family. A variant never seen alone cannot
-        be told apart from its companions.
+alone = isolates carrying this variant and no other from the same
+        gene family. A variant never seen alone cannot be told
+        apart from the variants it travels with.
+clust = distinct SNP clusters carrying it. When clust is much
+        smaller than n, the isolates are near-identical and the
+        effective sample size is closer to clust than to n.
 
-============================================================
-ISOLATES CARRYING A VARIANT THAT IS MOSTLY SUSCEPTIBLE
-============================================================
+========================================================================
+VARIANTS BELOW 95% RESISTANT, ISOLATE BY ISOLATE
+========================================================================
+
+tet(O)=MISTRANSLATION   n=7, 6 distinct clusters
+  [R] GCA_005023055.1  PDS000020853.46
+        rplV_A103V=POINT,tet(O),tet(O)=MISTRANSLATION
+  [R] GCA_004975645.1  PDS000021330.47
+        aph(3')-IIIa,tet(O),tet(O)=MISTRANSLATION
+  [R] GCA_005028475.1  PDS000260299.10
+        ant(6)-Ia=PARTIAL_END_OF_CONTIG,aph(3')-IIIa,blaOXA-460,blaOXA-61_G-57T=POINT,sat4,tet(O),tet(O)=MISTRANSLATION
+  [R] GCA_005331105.1  PDS000260299.10
+        ant(6)-Ia=PARTIAL,ant(6)-Ia=PARTIAL_END_OF_CONTIG,aph(3')-IIIa,blaOXA-460,blaOXA-61_G-57T=POINT,sat4,tet(O),tet(O)=MISTRANSLATION
+  [R] GCA_005362985.1  PDS000021136.6
+        gyrA_T86I=POINT,tet(O),tet(O)=MISTRANSLATION
+  [S] GCA_008897765.1  PDS000021868.49
+        blaOXA-193,tet(O)=MISTRANSLATION,tet(O)=PARTIAL
+  [R] GCA_034218075.1  PDS000022588.410
+        blaOXA=MISTRANSLATION,tet(O),tet(O)=MISTRANSLATION
+
+tet(O)=PARTIAL   n=17, 17 distinct clusters
+  [S] GCA_005283705.1  (none)
+        aadE-Cc,aadE-Cc=PARTIAL_END_OF_CONTIG,blaOXA-193,tet(O)=PARTIAL
+  [S] GCA_005289105.1  (none)
+        tet(O)=PARTIAL
+  [S] GCA_005293145.1  (none)
+        blaOXA=PARTIAL_END_OF_CONTIG,blaOXA-61_G-57T=POINT,tet(O)=PARTIAL
+  [R] GCA_005026395.1  PDS000137686.51
+        tet(O),tet(O)=PARTIAL
+  [R] GCA_005024315.1  PDS000022730.28
+        blaOXA-193,tet(O),tet(O)=PARTIAL
+  [R] GCA_005017535.1  PDS000054694.7
+        blaOXA-193,tet(O),tet(O)=PARTIAL
+  [S] GCA_004977105.1  PDS000262054.7
+        blaOXA-461,tet(O)=PARTIAL
+  [R] GCA_005326705.1  PDS000234431.23
+        ant(6)-Ia=PARTIAL,aph(3')-IIIa,blaOXA-193,sat4,tet(O),tet(O)=PARTIAL
+  [R] GCA_005328085.1  PDS000037231.103
+        aadE-Cc,aph(3')-IIIa,blaOXA-193,gyrA_T86I=POINT,tet(O),tet(O)=PARTIAL
+  [R] GCA_005328775.1  PDS000021147.2
+        blaOXA=MISTRANSLATION,blaOXA-193,gyrA_T86I=POINT,tet(O),tet(O)=PARTIAL
+  [R] GCA_005333205.1  PDS000107620.1
+        blaOXA-193,gyrA_T86I=POINT,tet(O),tet(O)=PARTIAL
+  [R] GCA_005359045.1  PDS000254414.1
+        blaOXA,blaOXA-193,blaOXA-61_G-57T=POINT,gyrA_T86I=POINT,tet(O),tet(O)=PARTIAL
+  [R] GCA_008727455.1  PDS000021518.45
+        23S_A2075G=POINT,aad9=PARTIAL,aadE,aph(2'')-Ih,aph(3')-IIIa,blaOXA-193,blaOXA-61_G-57T=POINT,cmeB,gyrA_T86I=POINT,sat4,tet(O),tet(O)=PARTIAL
+  [S] GCA_008897765.1  PDS000021868.49
+        blaOXA-193,tet(O)=MISTRANSLATION,tet(O)=PARTIAL
+  [S] GCA_034213755.1  PDS000022806.35
+        aph(3')-IIIa,aph(3')-VIIa,rplV_A103V=POINT,tet(O)=PARTIAL,tet(O)=PARTIAL_END_OF_CONTIG
+  [R] GCA_034212915.1  (none)
+        blaOXA=MISTRANSLATION,rplV_A103V=POINT,tet(O)=PARTIAL,tet(O)=PARTIAL_END_OF_CONTIG
+  [R] GCA_032628645.2  (none)
+        aph(3')-IIIa,tet(O),tet(O)=PARTIAL
+
+tet(O)=PARTIAL_END_OF_CONTIG   n=15, 14 distinct clusters
+  [R] GCA_005283725.1  (none)
+        aadE-Cc,blaOXA-193,tet(O),tet(O)=PARTIAL_END_OF_CONTIG
+  [R] GCA_005284065.1  (none)
+        aadE-Cc,blaOXA-193,blaOXA-61_G-57T=POINT,tet(O),tet(O)=PARTIAL_END_OF_CONTIG
+  [R] GCA_005285325.1  (none)
+        aad9=PARTIAL,aadE,ant(6)-Ia=PARTIAL,aph(3')-IIIa,blaOXA=MISTRANSLATION,rplV_A103V=POINT,sat4,tet(O),tet(O)=PARTIAL_END_OF_CONTIG
+  [R] GCA_005294465.1  (none)
+        blaOXA-193,blaOXA-61_G-57T=POINT,tet(O),tet(O)=PARTIAL_END_OF_CONTIG
+  [R] GCA_004976245.1  PDS000021114.6
+        blaOXA-489,blaOXA-61_G-57T=POINT,rplV_A103V=POINT,tet(O),tet(O)=PARTIAL_END_OF_CONTIG
+  [R] GCA_005206285.1  PDS000021471.1
+        blaOXA-594,blaOXA-61_G-57T=POINT,tet(O),tet(O)=PARTIAL_END_OF_CONTIG
+  [R] GCA_005358685.1  (none)
+        23S_A2075G=POINT,aadE,ant(6)-Ia=PARTIAL,aph(3')-IIIa,rplV_A103V=POINT,sat4,tet(O),tet(O)=PARTIAL_END_OF_CONTIG
+  [R] GCA_006354235.1  PDS000157043.26
+        aph(3')-IIIa,gyrA_T86I=POINT,rplV_A103V=POINT,tet(O),tet(O)=PARTIAL_END_OF_CONTIG
+  [R] GCA_010362525.1  PDS000157043.26
+        aph(3')-IIIa,gyrA_T86I=POINT,rplV_A103V=POINT,tet(O),tet(O)=PARTIAL_END_OF_CONTIG
+  [R] GCA_014618335.1  PDS000217387.1
+        aad9=PARTIAL,aadE,aph(3')-IIIa,blaOXA,catA13,cmeB,erm(B),gyrA_T86I=POINT,tet(O),tet(O)=PARTIAL_END_OF_CONTIG
+  [R] GCA_022362815.1  PDS000214692.22
+        blaOXA-193,blaOXA-61_G-57T=POINT,cmeB,gyrA_T86I=POINT,tet(O),tet(O)=PARTIAL_END_OF_CONTIG
+  [R] GCA_034216855.1  PDS000022422.142
+        blaOXA-603,rplV_A103V=POINT,tet(O),tet(O)=PARTIAL_END_OF_CONTIG
+  [S] GCA_034213755.1  PDS000022806.35
+        aph(3')-IIIa,aph(3')-VIIa,rplV_A103V=POINT,tet(O)=PARTIAL,tet(O)=PARTIAL_END_OF_CONTIG
+  [R] GCA_034212915.1  (none)
+        blaOXA=MISTRANSLATION,rplV_A103V=POINT,tet(O)=PARTIAL,tet(O)=PARTIAL_END_OF_CONTIG
+  [R] GCA_005358945.2  PDS000032969.2
+        aph(3')-VIIa,blaOXA-489,blaOXA-61_G-57T=POINT,tet(O)=PARTIAL_END_OF_CONTIG

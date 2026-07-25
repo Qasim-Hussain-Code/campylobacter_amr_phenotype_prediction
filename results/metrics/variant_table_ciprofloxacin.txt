@@ -2,25 +2,32 @@ Drug:     ciprofloxacin
 Cohort:   3,984 isolates, 824 resistant (20.7%)
 Prefixes: ['gyrA_', 'cmeB', 'cmeR', 'blaOXA-493']
 
-variant                          n     R     S     % R  alone
--------------------------------------------------------------
-blaOXA-493                       5     5     0   100%      5
-cmeB                             6     6     0   100%      6
-gyrA_T86A=POINT                  4     0     4     0%      4
-gyrA_T86I=POINT                810   808     2   100%    810
-gyrA_T86K=POINT                  1     1     0   100%      1
-gyrA_T86V=POINT                  8     8     0   100%      8
+variant                           n     R    S     % R  alone  clust
+--------------------------------------------------------------------
+blaOXA-493                        5     5    0 100.0%      5      4
+cmeB                              6     6    0 100.0%      6      5
+gyrA_T86A=POINT                   4     0    4   0.0%      4      2
+gyrA_T86I=POINT                 810   808    2  99.8%    810    336
+gyrA_T86K=POINT                   1     1    0 100.0%      1      1
+gyrA_T86V=POINT                   8     8    0 100.0%      8      7
 
-alone = isolates carrying this variant and no other from the
-        same gene family. A variant never seen alone cannot
-        be told apart from its companions.
+alone = isolates carrying this variant and no other from the same
+        gene family. A variant never seen alone cannot be told
+        apart from the variants it travels with.
+clust = distinct SNP clusters carrying it. When clust is much
+        smaller than n, the isolates are near-identical and the
+        effective sample size is closer to clust than to n.
 
-============================================================
-ISOLATES CARRYING A VARIANT THAT IS MOSTLY SUSCEPTIBLE
-============================================================
+========================================================================
+VARIANTS BELOW 95% RESISTANT, ISOLATE BY ISOLATE
+========================================================================
 
-gyrA_T86A=POINT  (4 isolates)
-  [S] GCA_007913865.1  blaOXA-184,gyrA_T86A=POINT,rplV_A103V=POINT,tet(O)
-  [S] GCA_010310705.1  blaOXA,gyrA_T86A=POINT,rplV_A103V=POINT,tet(O)
-  [S] GCA_014723015.1  blaOXA-184,gyrA_T86A=POINT,rplV_A103V=POINT,tet(O)
-  [S] GCA_014721345.1  blaOXA-184,gyrA_T86A=POINT,rplV_A103V=POINT,tet(O)
+gyrA_T86A=POINT   n=4, 2 distinct clusters
+  [S] GCA_007913865.1  (none)
+        blaOXA-184,gyrA_T86A=POINT,rplV_A103V=POINT,tet(O)
+  [S] GCA_010310705.1  PDS000023369.33
+        blaOXA,gyrA_T86A=POINT,rplV_A103V=POINT,tet(O)
+  [S] GCA_014723015.1  PDS000023369.33
+        blaOXA-184,gyrA_T86A=POINT,rplV_A103V=POINT,tet(O)
+  [S] GCA_014721345.1  PDS000023369.33
+        blaOXA-184,gyrA_T86A=POINT,rplV_A103V=POINT,tet(O)
