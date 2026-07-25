@@ -25,7 +25,12 @@ PROCESSED = ROOT / "data" / "processed"
 # Drop features carried by fewer than this many isolates. A column with
 # two positives cannot support a reliable estimate of its effect, and it
 # gives a flexible model something to memorise.
-MIN_COUNT = 10
+MIN_COUNT = int(sys.argv[2]) if len(sys.argv) > 2 else 3
+
+# Prefixes for genes with an established mechanistic link to a drug in
+# this chapter. Dropping one of these is worth a warning, because the
+# rarity threshold is an arbitrary choice and the mechanism is not.
+MECHANISTIC = ("gyrA_", "parC_", "tet(", "23S_", "erm(")
 
 
 def entries(genotypes):
@@ -64,7 +69,15 @@ def main():
     dropped = len(vocabulary) - len(keep)
     X = X[keep]
     print(f"[feat] dropped {dropped:,} entries seen in fewer than {MIN_COUNT} isolates")
-    print(f"[feat] {X.shape[1]:,} features retained")
+    print(f"[feat] {X.shape[1]:,} features retained "
+          f"(threshold {MIN_COUNT})")
+
+    lost = [g for g in vocabulary
+            if g not in keep and g.startswith(MECHANISTIC)]
+    if lost:
+        print("[warn] dropped features with a known mechanism:")
+        for g in lost:
+            print(f"         {int(counts[g]):5d}  {g}")
 
     X.insert(0, "asm_acc", df["asm_acc"].values)
 

@@ -1,6 +1,6 @@
 Drug:     ciprofloxacin
-Features: 39
-Rule:     any of ['gyrA_T86I=POINT']
+Features: 58
+Rule:     any of ['gyrA_T86A=POINT', 'gyrA_T86I=POINT', 'gyrA_T86V=POINT']
 
 ==========================================================================
 RANDOM SPLIT   train 2,988   test 996
@@ -11,19 +11,19 @@ model       set        TP   FN   FP    TN    sens    spec      acc   err
 baseline    train       0  618    0  2370   0.000   1.000   0.7932   618
 baseline    test        0  206    0   790   0.000   1.000   0.7932   206
 
-rule        train     608   10    1  2369   0.984   1.000   0.9963    11
-rule        test      200    6    1   789   0.971   0.999   0.9930     7
+rule        train     614    4    3  2367   0.994   0.999   0.9977     7
+rule        test      202    4    3   787   0.981   0.996   0.9930     7
 
-logistic    train     608   10    1  2369   0.984   1.000   0.9963    11
-logistic    test      200    6    1   789   0.971   0.999   0.9930     7
+logistic    train     611    7    1  2369   0.989   1.000   0.9973     8
+logistic    test      202    4    1   789   0.981   0.999   0.9950     5
 
 largest logistic coefficients:
-    +8.875  gyrA_T86I=POINT
-    -0.439  blaOXA-61
-    -0.415  aph(3')-VIIa
-    -0.387  blaOXA-594
-    -0.378  blaOXA=MISTRANSLATION
-    -0.302  blaOXA-489
+    +8.947  gyrA_T86I=POINT
+    +3.689  gyrA_T86V=POINT
+    +1.469  blaOXA-493
+    -0.377  aph(3')-VIIa
+    +0.360  tet(O)
+    -0.345  blaOXA-594
 
 ==========================================================================
 GROUPED SPLIT   train 3,082   test 902
@@ -34,17 +34,17 @@ model       set        TP   FN   FP    TN    sens    spec      acc   err
 baseline    train       0  616    0  2466   0.000   1.000   0.8001   616
 baseline    test        0  208    0   694   0.000   1.000   0.7694   208
 
-rule        train     606   10    2  2464   0.984   0.999   0.9961    12
-rule        test      202    6    0   694   0.971   1.000   0.9933     6
+rule        train     610    6    6  2460   0.990   0.998   0.9961    12
+rule        test      206    2    0   694   0.990   1.000   0.9978     2
 
 logistic    train     606   10    2  2464   0.984   0.999   0.9961    12
 logistic    test      202    6    0   694   0.971   1.000   0.9933     6
 
 largest logistic coefficients:
-    +8.819  gyrA_T86I=POINT
-    -0.933  aph(3')-VIIa=PARTIAL
-    +0.430  blaOXA
-    +0.410  blaOXA-184
-    -0.407  blaOXA-61
-    -0.406  aph(3')-VIIa
+    +8.845  gyrA_T86I=POINT
+    +2.364  blaOXA-493
+    +2.364  gyrA_T86V=POINT
+    -0.903  aph(3')-VIIa=PARTIAL
+    +0.450  blaOXA
+    +0.443  blaOXA-184
 
