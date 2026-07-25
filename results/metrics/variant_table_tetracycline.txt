@@ -1,0 +1,21 @@
+Drug:     tetracycline
+Cohort:   3,983 isolates, 1,902 resistant (47.8%)
+Prefixes: ['tet(', 'cmeB', 'cmeR']
+
+variant                          n     R     S     % R  alone
+-------------------------------------------------------------
+cmeB                             6     6     0   100%      6
+tet(O)                        1890  1882     8   100%   1862
+tet(O)=MISTRANSLATION            7     6     1    86%      0
+tet(O)=PARTIAL                  17    11     6    65%      4
+tet(O)=PARTIAL_END_OF_CONTIG    15    14     1    93%      1
+tet(O/M/O)                       4     4     0   100%      4
+tet(O/W/32/O)                    1     1     0   100%      1
+
+alone = isolates carrying this variant and no other from the
+        same gene family. A variant never seen alone cannot
+        be told apart from its companions.
+
+============================================================
+ISOLATES CARRYING A VARIANT THAT IS MOSTLY SUSCEPTIBLE
+============================================================

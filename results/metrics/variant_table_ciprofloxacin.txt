@@ -1,0 +1,26 @@
+Drug:     ciprofloxacin
+Cohort:   3,984 isolates, 824 resistant (20.7%)
+Prefixes: ['gyrA_', 'cmeB', 'cmeR', 'blaOXA-493']
+
+variant                          n     R     S     % R  alone
+-------------------------------------------------------------
+blaOXA-493                       5     5     0   100%      5
+cmeB                             6     6     0   100%      6
+gyrA_T86A=POINT                  4     0     4     0%      4
+gyrA_T86I=POINT                810   808     2   100%    810
+gyrA_T86K=POINT                  1     1     0   100%      1
+gyrA_T86V=POINT                  8     8     0   100%      8
+
+alone = isolates carrying this variant and no other from the
+        same gene family. A variant never seen alone cannot
+        be told apart from its companions.
+
+============================================================
+ISOLATES CARRYING A VARIANT THAT IS MOSTLY SUSCEPTIBLE
+============================================================
+
+gyrA_T86A=POINT  (4 isolates)
+  [S] GCA_007913865.1  blaOXA-184,gyrA_T86A=POINT,rplV_A103V=POINT,tet(O)
+  [S] GCA_010310705.1  blaOXA,gyrA_T86A=POINT,rplV_A103V=POINT,tet(O)
+  [S] GCA_014723015.1  blaOXA-184,gyrA_T86A=POINT,rplV_A103V=POINT,tet(O)
+  [S] GCA_014721345.1  blaOXA-184,gyrA_T86A=POINT,rplV_A103V=POINT,tet(O)

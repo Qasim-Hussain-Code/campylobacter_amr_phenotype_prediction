@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Tabulate individual resistance-gene variants against measured phenotype.
 
-The threshold sweep implied that not every substitution at gyrA 86 behaves
-the same way. That was inferred from differences in accuracy. This checks
-it directly, which is the only honest way to make the claim.
+Counts alone are misleading in surveillance data. Four isolates from one
+outbreak are one observation repeated, not four. This reports how many
+distinct SNP clusters carry each variant alongside the raw count, so the
+effective sample size is visible rather than assumed.
 
 Usage:
     python scripts/11_variant_table.py [drug] [prefix ...]
@@ -26,6 +27,10 @@ DEFAULT_PREFIXES = {
     "tetracycline": ["tet(", "cmeB", "cmeR"],
 }
 
+# Report every isolate for a variant when the resistant fraction falls
+# below this, since those are the ones worth reading individually.
+DETAIL_BELOW = 0.95
+
 
 def entries(genotypes):
     if not isinstance(genotypes, str) or genotypes in ("", "NULL"):
@@ -46,6 +51,12 @@ def main():
     df["entries"] = df["AMR_genotypes"].apply(entries)
     resistant = df[drug] == "R"
 
+    # Unclustered isolates count as their own group. We cannot show they
+    # are related to anything, so we do not assume that they are.
+    clusters = df["snp_cluster"].copy()
+    solo = clusters.isna()
+    clusters[solo] = [f"__solo_{i}" for i in range(int(solo.sum()))]
+
     lines = []
 
     def out(s=""):
@@ -65,48 +76,59 @@ def main():
 
     if not variants:
         out("No matching variants found.")
-    else:
-        header = f"{'variant':<28}{'n':>6}{'R':>6}{'S':>6}{'% R':>8}{'alone':>7}"
-        out(header)
-        out("-" * len(header))
+        return
 
-        for v in variants:
-            has = df["entries"].apply(lambda es, v=v: v in es)
-            n = int(has.sum())
-            n_r = int((has & resistant).sum())
-            n_s = n - n_r
+    header = (f"{'variant':<30}{'n':>5}{'R':>6}{'S':>5}"
+              f"{'% R':>8}{'alone':>7}{'clust':>7}")
+    out(header)
+    out("-" * len(header))
 
-            # How many carry this variant and no other from the same prefix
-            # family. A variant that never appears alone cannot be assessed
-            # independently of the ones it travels with.
-            fam = [p for p in prefixes if v.startswith(p)][0]
-            alone = int(df.loc[has, "entries"].apply(
-                lambda es, v=v, fam=fam:
-                sum(1 for e in es if e.startswith(fam)) == 1
-            ).sum())
+    detail = []
 
-            out(f"{v:<28}{n:>6}{n_r:>6}{n_s:>6}"
-                f"{n_r / n:>7.0%}{alone:>7}")
-
-        out()
-        out("alone = isolates carrying this variant and no other from the")
-        out("        same gene family. A variant never seen alone cannot")
-        out("        be told apart from its companions.")
-
-    out()
-    out("=" * 60)
-    out("ISOLATES CARRYING A VARIANT THAT IS MOSTLY SUSCEPTIBLE")
-    out("=" * 60)
     for v in variants:
         has = df["entries"].apply(lambda es, v=v: v in es)
         n = int(has.sum())
-        if n == 0 or (has & resistant).sum() / n >= 0.5:
-            continue
-        out(f"\n{v}  ({n} isolates)")
-        sub = df[has]
-        for acc, geno, call in zip(sub["asm_acc"], sub["AMR_genotypes"],
-                                   sub[drug]):
-            out(f"  [{call}] {acc}  {geno}")
+        n_r = int((has & resistant).sum())
+        n_s = n - n_r
+        frac = n_r / n
+
+        fam = next(p for p in prefixes if v.startswith(p))
+        alone = int(df.loc[has, "entries"].apply(
+            lambda es, fam=fam: sum(1 for e in es if e.startswith(fam)) == 1
+        ).sum())
+
+        n_clust = clusters[has].nunique()
+
+        out(f"{v:<30}{n:>5}{n_r:>6}{n_s:>5}"
+            f"{frac:>7.1%}{alone:>7}{n_clust:>7}")
+
+        if frac < DETAIL_BELOW:
+            detail.append((v, has, n, n_clust))
+
+    out()
+    out("alone = isolates carrying this variant and no other from the same")
+    out("        gene family. A variant never seen alone cannot be told")
+    out("        apart from the variants it travels with.")
+    out("clust = distinct SNP clusters carrying it. When clust is much")
+    out("        smaller than n, the isolates are near-identical and the")
+    out("        effective sample size is closer to clust than to n.")
+
+    if detail:
+        out()
+        out("=" * 72)
+        out(f"VARIANTS BELOW {DETAIL_BELOW:.0%} RESISTANT, ISOLATE BY ISOLATE")
+        out("=" * 72)
+        for v, has, n, n_clust in detail:
+            out()
+            out(f"{v}   n={n}, {n_clust} distinct cluster"
+                f"{'s' if n_clust != 1 else ''}")
+            sub = df[has]
+            for acc, cl, geno, call in zip(
+                sub["asm_acc"], sub["snp_cluster"].fillna("(none)"),
+                sub["AMR_genotypes"], sub[drug]
+            ):
+                out(f"  [{call}] {acc}  {cl}")
+                out(f"        {geno}")
 
     METRICS.mkdir(parents=True, exist_ok=True)
     dest = METRICS / f"variant_table_{slug}.txt"
