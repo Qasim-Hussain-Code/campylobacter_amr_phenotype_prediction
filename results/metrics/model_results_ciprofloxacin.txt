@@ -1,0 +1,50 @@
+Drug:     ciprofloxacin
+Features: 39
+Rule:     any of ['gyrA_T86I=POINT']
+
+==========================================================================
+RANDOM SPLIT   train 2,988   test 996
+test set is 20.7% resistant, so the majority-class floor on test is 0.7932
+==========================================================================
+model       set        TP   FN   FP    TN    sens    spec      acc   err
+------------------------------------------------------------------------
+baseline    train       0  618    0  2370   0.000   1.000   0.7932   618
+baseline    test        0  206    0   790   0.000   1.000   0.7932   206
+
+rule        train     608   10    1  2369   0.984   1.000   0.9963    11
+rule        test      200    6    1   789   0.971   0.999   0.9930     7
+
+logistic    train     608   10    1  2369   0.984   1.000   0.9963    11
+logistic    test      200    6    1   789   0.971   0.999   0.9930     7
+
+largest logistic coefficients:
+    +8.875  gyrA_T86I=POINT
+    -0.439  blaOXA-61
+    -0.415  aph(3')-VIIa
+    -0.387  blaOXA-594
+    -0.378  blaOXA=MISTRANSLATION
+    -0.302  blaOXA-489
+
+==========================================================================
+GROUPED SPLIT   train 3,082   test 902
+test set is 23.1% resistant, so the majority-class floor on test is 0.7694
+==========================================================================
+model       set        TP   FN   FP    TN    sens    spec      acc   err
+------------------------------------------------------------------------
+baseline    train       0  616    0  2466   0.000   1.000   0.8001   616
+baseline    test        0  208    0   694   0.000   1.000   0.7694   208
+
+rule        train     606   10    2  2464   0.984   0.999   0.9961    12
+rule        test      202    6    0   694   0.971   1.000   0.9933     6
+
+logistic    train     606   10    2  2464   0.984   0.999   0.9961    12
+logistic    test      202    6    0   694   0.971   1.000   0.9933     6
+
+largest logistic coefficients:
+    +8.819  gyrA_T86I=POINT
+    -0.933  aph(3')-VIIa=PARTIAL
+    +0.430  blaOXA
+    +0.410  blaOXA-184
+    -0.407  blaOXA-61
+    -0.406  aph(3')-VIIa
+
