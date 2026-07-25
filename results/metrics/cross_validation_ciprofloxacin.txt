@@ -1,0 +1,45 @@
+Drug:     ciprofloxacin
+Features: 58
+Rule:     ['gyrA_T86A=POINT', 'gyrA_T86I=POINT', 'gyrA_T86V=POINT']
+Scheme:   5-fold, repeated 5 times (25 folds per scheme)
+
+==================================================================
+RANDOM FOLDS
+==================================================================
+model         mean acc       sd     worst      best
+---------------------------------------------------
+rule            0.9965   0.0023    0.9912    1.0000
+logistic        0.9961   0.0030    0.9862    1.0000
+
+logistic better in 8 folds, worse in 9, tied in 8
+mean accuracy difference: -0.0004 (sd 0.0019)
+
+==================================================================
+GROUPED FOLDS
+==================================================================
+model         mean acc       sd     worst      best
+---------------------------------------------------
+rule            0.9965   0.0020    0.9913    1.0000
+logistic        0.9960   0.0027    0.9893    1.0000
+
+logistic better in 5 folds, worse in 12, tied in 8
+mean accuracy difference: -0.0005 (sd 0.0020)
+
+==================================================================
+FEATURE CO-OCCURRENCE WITH THE RULE
+==================================================================
+feature                          n     coef  P(rule|feat)  P(feat|rule)
+-----------------------------------------------------------------------
+gyrA_T86I=POINT                810     9.15         1.000         0.985  <- rule
+gyrA_T86V=POINT                  8     3.92         1.000         0.010  <- rule
+blaOXA-493                       5     1.90         1.000         0.006
+aph(3')-VIIa=PARTIAL            14    -0.85         0.071         0.001
+aph(3')-VIIa                   138    -0.43         0.036         0.006
+blaOXA                         125     0.40         0.280         0.043
+tet(O)                        1890     0.40         0.280         0.645
+blaOXA-184                     181     0.38         0.309         0.068
+
+A feature with no mechanistic link to this drug but a high
+P(rule|feature) is a passenger: it travels with the causal
+mutation on a shared lineage or element, and the model cannot
+separate the two from presence and absence alone.
