@@ -1,0 +1,30 @@
+Drug:      tetracycline
+Cohort:    3,983 isolates, 1,902 resistant
+Vocabulary: 84 distinct gene entries
+Scheme:    5-fold x 3 repeats = 15 folds per scheme
+
+ min  feats  rule cols  rule rand  log rand  rule grp   log grp  pass
+---------------------------------------------------------------------
+   1     84          6     0.9932    0.9930    0.9933    0.9930    22
+   3     58          5     0.9930    0.9930    0.9930    0.9930    11
+   5     48          4     0.9920    0.9930    0.9920    0.9930     7
+  10     39          3     0.9920    0.9930    0.9920    0.9930     5
+  20     26          1     0.9930    0.9930    0.9930    0.9930     1
+
+rule cols = how many gyrA position-86 features survive the filter
+pass      = admitted features with no mechanistic link that occur
+            only in isolates already flagged by the rule
+
+==================================================================
+PASSENGERS BY THRESHOLD
+==================================================================
+min   1: aadE (n=27), aph(2'')-If (n=17), aad9 (n=10), aad9=PARTIAL (n=10), blaOXA-595 (n=10), aph(2'')-Ig (n=9), cmeB (n=6), aph(2'')-IIIa (n=4), sat4=MISTRANSLATION (n=4), aadE-Cc=PARTIAL_END_OF_CONTIG (n=3), sat4=PARTIAL_END_OF_CONTIG (n=3), aph(2'')-Ih (n=2), aph(3')-IIIa=PARTIAL (n=2), blaOXA-625 (n=2), aac(6')-E64 (n=1), aph(2'')-If=PARTIAL (n=1), aph(2'')-If=PARTIAL_END_OF_CONTIG (n=1), aph(3')-H510 (n=1), aph(3')-IIIa=MISTRANSLATION (n=1), catA13 (n=1), porA_N138ND=POINT (n=1), sat4=PARTIAL (n=1)
+min   3: aadE (n=27), aph(2'')-If (n=17), aad9 (n=10), aad9=PARTIAL (n=10), blaOXA-595 (n=10), aph(2'')-Ig (n=9), cmeB (n=6), aph(2'')-IIIa (n=4), sat4=MISTRANSLATION (n=4), aadE-Cc=PARTIAL_END_OF_CONTIG (n=3), sat4=PARTIAL_END_OF_CONTIG (n=3)
+min   5: aadE (n=27), aph(2'')-If (n=17), aad9 (n=10), aad9=PARTIAL (n=10), blaOXA-595 (n=10), aph(2'')-Ig (n=9), cmeB (n=6)
+min  10: aadE (n=27), aph(2'')-If (n=17), aad9 (n=10), aad9=PARTIAL (n=10), blaOXA-595 (n=10)
+min  20: aadE (n=27)
+
+A passenger is not a modelling error. It is a real correlation in
+the data. The model cannot distinguish it from a cause using
+presence and absence alone, which is why the mechanism has to
+come from outside the dataset.
