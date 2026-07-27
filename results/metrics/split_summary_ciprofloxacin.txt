@@ -1,0 +1,13 @@
+[drug] ciprofloxacin
+[read] 3,984 isolates, 824 resistant, 3,160 susceptible
+
+[ random] train 2,988  test 996
+          train resistant 0.207  test resistant 0.207
+          clusters spanning both folds: 344
+
+[grouped] train 3,082  test 902
+          train resistant 0.200  test resistant 0.231
+          clusters spanning both folds: 0
+
+[params] seed=42  test_fraction=0.25
+[done] wrote data/processed/splits_ciprofloxacin.parquet

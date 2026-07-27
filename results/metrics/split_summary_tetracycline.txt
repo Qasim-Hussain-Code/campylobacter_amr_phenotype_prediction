@@ -1,0 +1,13 @@
+[drug] tetracycline
+[read] 3,983 isolates, 1,902 resistant, 2,081 susceptible
+
+[ random] train 2,987  test 996
+          train resistant 0.477  test resistant 0.478
+          clusters spanning both folds: 350
+
+[grouped] train 3,082  test 901
+          train resistant 0.480  test resistant 0.468
+          clusters spanning both folds: 0
+
+[params] seed=42  test_fraction=0.25
+[done] wrote data/processed/splits_tetracycline.parquet

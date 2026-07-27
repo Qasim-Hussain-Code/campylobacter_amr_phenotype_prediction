@@ -1,0 +1,10 @@
+NCBI Pathogen Detection release: PDG000000003.2859
+
+Raw files read:
+  PDG000000003.2859.metadata.tsv   modified 2026-07-24 13:46:33 UTC
+  PDG000000003.2859.cluster_list.tsv  modified 2026-07-24 14:38:10 UTC
+
+Script ran:  2026-07-27 15:38:20 UTC
+Drug:        tetracycline
+Cohort size: 3,983 isolates
+Clusters:    1,128 distinct SNP clusters

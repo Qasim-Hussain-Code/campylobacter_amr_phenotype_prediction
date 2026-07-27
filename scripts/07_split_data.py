@@ -22,6 +22,7 @@ from sklearn.model_selection import train_test_split, GroupShuffleSplit
 
 ROOT = Path(__file__).resolve().parent.parent
 PROCESSED = ROOT / "data" / "processed"
+METRICS = ROOT / "results" / "metrics"
 
 SEED = 42
 TEST_FRACTION = 0.25
@@ -37,8 +38,17 @@ def main():
 
     y = pd.read_parquet(path)
     n = len(y)
-    print(f"[drug] {drug}")
-    print(f"[read] {n:,} isolates, {int(y['resistant'].sum()):,} resistant")
+    n_res = int(y["resistant"].sum())
+    n_sus = n - n_res
+
+    lines = []
+
+    def out(s=""):
+        print(s)
+        lines.append(s)
+
+    out(f"[drug] {drug}")
+    out(f"[read] {n:,} isolates, {n_res:,} resistant, {n_sus:,} susceptible")
 
     idx = np.arange(n)
 
@@ -69,18 +79,26 @@ def main():
     for name in ("split_random", "split_grouped"):
         tr = y[y[name] == "train"]
         te = y[y[name] == "test"]
-        print()
-        print(f"[{name.split('_')[1]:>7}] train {len(tr):,}  test {len(te):,}")
-        print(f"          train resistant {tr['resistant'].mean():.3f}  "
-              f"test resistant {te['resistant'].mean():.3f}")
+        out()
+        out(f"[{name.split('_')[1]:>7}] train {len(tr):,}  test {len(te):,}")
+        out(f"          train resistant {tr['resistant'].mean():.3f}  "
+            f"test resistant {te['resistant'].mean():.3f}")
 
         shared = set(tr["snp_cluster"].dropna()) & set(te["snp_cluster"].dropna())
-        print(f"          clusters spanning both folds: {len(shared):,}")
+        out(f"          clusters spanning both folds: {len(shared):,}")
+
+    out()
+    out(f"[params] seed={SEED}  test_fraction={TEST_FRACTION}")
 
     PROCESSED.mkdir(parents=True, exist_ok=True)
-    out = PROCESSED / f"splits_{slug}.parquet"
-    y.to_parquet(out, index=False)
-    print(f"\n[done] wrote {out.relative_to(ROOT)}  seed={SEED}")
+    out_path = PROCESSED / f"splits_{slug}.parquet"
+    y.to_parquet(out_path, index=False)
+    out(f"[done] wrote {out_path.relative_to(ROOT)}")
+
+    METRICS.mkdir(parents=True, exist_ok=True)
+    dest = METRICS / f"split_summary_{slug}.txt"
+    dest.write_text("\n".join(lines) + "\n")
+    print(f"[done] wrote {dest.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

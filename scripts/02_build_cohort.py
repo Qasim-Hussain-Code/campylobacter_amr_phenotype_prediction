@@ -15,12 +15,15 @@ Writes  data/interim/cohort_<drug>.parquet
 
 from pathlib import Path
 import sys
+import os
+from datetime import datetime, timezone
 import pandas as pd
 
 PDG = "PDG000000003.2859"
 ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw"
 INTERIM = ROOT / "data" / "interim"
+METRICS = ROOT / "results" / "metrics"
 
 USE_COLS = [
     "target_acc",
@@ -55,6 +58,12 @@ def parse_ast(field, drug):
         if name.strip() == drug:
             return call.strip()
     return None
+
+
+def file_mtime(path):
+    """Return the modification time of a file as an ISO 8601 string."""
+    ts = os.path.getmtime(path)
+    return datetime.fromtimestamp(ts, tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
 
 def main():
@@ -123,6 +132,25 @@ def main():
     print(f"\n[done] wrote {out.relative_to(ROOT)}")
     print(f"       {len(cohort):,} isolates x {cohort.shape[1]} columns")
     print(f"       {cohort['snp_cluster'].nunique():,} distinct SNP clusters")
+
+    # Write provenance record.
+    METRICS.mkdir(parents=True, exist_ok=True)
+    run_time = datetime.now(tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+    prov_lines = [
+        f"NCBI Pathogen Detection release: {PDG}",
+        f"",
+        f"Raw files read:",
+        f"  {meta_path.name}   modified {file_mtime(meta_path)}",
+        f"  {clust_path.name}  modified {file_mtime(clust_path)}",
+        f"",
+        f"Script ran:  {run_time}",
+        f"Drug:        {drug}",
+        f"Cohort size: {len(cohort):,} isolates",
+        f"Clusters:    {cohort['snp_cluster'].nunique():,} distinct SNP clusters",
+    ]
+    dest = METRICS / f"provenance_{slug}.txt"
+    dest.write_text("\n".join(prov_lines) + "\n")
+    print(f"[done] wrote {dest.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":
