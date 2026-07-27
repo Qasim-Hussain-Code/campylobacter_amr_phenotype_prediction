@@ -17,3 +17,4 @@ __pycache__/
 *.log
 *.csv
 *.tsv
+*.fastq.gz
