@@ -29,7 +29,11 @@ TEST_FRACTION = 0.25
 
 
 def main():
-    drug = sys.argv[1] if len(sys.argv) > 1 else "ciprofloxacin"
+    if len(sys.argv) < 2:
+        print("usage: 07_split_data.py <drug>   drugs: any cohort built by "
+              "02_build_cohort.py", file=sys.stderr)
+        sys.exit(2)
+    drug = sys.argv[1]
     slug = drug.replace(" ", "_")
 
     path = PROCESSED / f"labels_{slug}.parquet"

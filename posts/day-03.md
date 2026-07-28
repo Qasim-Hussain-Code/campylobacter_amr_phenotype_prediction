@@ -74,9 +74,22 @@ Why? Tomorrow.
 
 ---
 
-## Number and Metric Traceability
+Numbers in this post
 
-- **3,984 genomes / 3,971 right / 13 errors / 99.67% accuracy:** `results/metrics/marker_comparison_ciprofloxacin.txt` (row `any change at gyrA 86`: acc=0.9967, err=13, TP=813, FP=2, FN=11, TN=3158 -> 813+3158 = 3,971 correct).
-- **79.32% baseline floor (3,160/3,984 susceptible):** `results/metrics/cohort_summary_ciprofloxacin.txt` (`majority-class baseline accuracy: 0.793` / S=3160, R=824).
-- **84 candidate gene entries:** `results/metrics/threshold_sweep_ciprofloxacin.txt` (`Vocabulary: 84 distinct gene entries`).
-- **Feature weights (gyrA_T86I = 8.845 / ~8.9; gyrA_T86V = 2.364; blaOXA-493 = 2.364):** `results/metrics/model_results_ciprofloxacin.txt` (GROUPED SPLIT section).
+```
+3,984 genomes                 results/metrics/cohort_summary_ciprofloxacin.txt
+99.67%, all but thirteen      results/metrics/marker_comparison_ciprofloxacin.txt
+                              (row: any change at gyrA 86, acc 0.9967, err 13)
+79.32% guessing susceptible   results/metrics/marker_comparison_ciprofloxacin.txt
+                              (printed as 0.7932; cohort_summary rounds to 0.793)
+all 84 resistance genes       results/metrics/threshold_sweep_ciprofloxacin.txt
+                              (vocabulary, rarity threshold 1)
+weight of 8.9                 results/metrics/model_results_ciprofloxacin.txt
+2.364, twice                  (grouped split; 8.9 is printed as +8.845)
+Release                       PDG000000003.2859
+
+Arithmetic from the above, printed in no file:
+
+right 3,971 times             3,984 isolates minus 13 errors
+beats it by twenty points     99.67 minus 79.32
+```

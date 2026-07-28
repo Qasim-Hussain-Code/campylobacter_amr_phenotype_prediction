@@ -52,8 +52,20 @@ Tomorrow: the second half of that problem, which is not in the biology. It is in
 
 ---
 
-## Number and Metric Traceability
+Numbers in this post
 
-- **Genome size (~1.6M bp):** Standard reference size for *Campylobacter jejuni* NCTC 11168 (1,641,481 bp).
-- **Primary resistance allele (`gyrA_T86I`):** `results/metrics/cohort_summary_ciprofloxacin.txt` (Marker: `gyrA_T86I`) & `results/metrics/variant_table_ciprofloxacin.txt` (810 isolates carrying `gyrA_T86I=POINT`).
-- **Phenotypic AST target:** Phenotypes parsed from NCBI Pathogen Detection release `PDG000000003.2859` (`results/metrics/provenance_ciprofloxacin.txt`).
+```
+gyrA T86I as the marker       results/metrics/cohort_summary_ciprofloxacin.txt
+                              (Marker: gyrA_T86I)
+Release                       PDG000000003.2859
+                              results/metrics/provenance_ciprofloxacin.txt
+
+The mechanism in this post is published biology, not an output of this
+pipeline:
+
+1.6 million bases             C. jejuni NCTC 11168 reference genome
+position 257 of gyrA          codon 86, fluoroquinolone literature
+128-fold rise in MIC          fluoroquinolone literature
+no topoisomerase IV, no parC  C. jejuni genome literature
+CmeABC efflux                 C. jejuni efflux literature
+```

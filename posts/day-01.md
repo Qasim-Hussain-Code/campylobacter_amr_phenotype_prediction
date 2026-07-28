@@ -34,8 +34,18 @@ Tell me in the comments which half you are missing.
 
 ---
 
-## Number and Metric Traceability
+Numbers in this post
 
-*This post serves as the conceptual introduction to the series on forensic bioinformatics and label provenance.*
-- **Historical Case Study:** Duke University pharmacogenomics clinical trial error analysis (Baggerly & Coombes, 2009 *Annals of Applied Statistics*).
-- **Dataset / Environment Audit:** Verified in `envs/environment.yml` and `scripts/01_fetch_ncbi_metadata.sh` that data provenance pipeline is fully reproducible from source.
+```
+No figure in this post comes from this repository. Day 1 introduces the
+series and quotes no output of these scripts.
+
+The claims it does make trace outside the repository:
+
+2006 Nature Medicine paper    Potti et al. (2006), Nature Medicine
+label reversals, off-by-one   Baggerly and Coombes (2009), Annals of
+                              Applied Statistics
+three clinical trials         same source
+68th of 10,761 on Kaggle      author's public Kaggle profile
+around sixty analyses         author's public repositories
+```

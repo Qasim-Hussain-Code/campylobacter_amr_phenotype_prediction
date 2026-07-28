@@ -66,7 +66,11 @@ def cv_errors(Xv, y, groups, scheme, seed_base):
 
 
 def main():
-    drug = sys.argv[1] if len(sys.argv) > 1 else "ciprofloxacin"
+    if len(sys.argv) < 2:
+        print(f"usage: 10_threshold_sweep.py <drug>   drugs: {', '.join(RULE_PREFIX)}",
+              file=sys.stderr)
+        sys.exit(2)
+    drug = sys.argv[1]
     slug = drug.replace(" ", "_")
 
     path = INTERIM / f"cohort_{slug}.parquet"
@@ -146,7 +150,7 @@ def main():
             f"{len(passengers):>6}")
 
     out()
-    out("rule cols = how many gyrA position-86 features survive the filter")
+    out(f"rule cols = how many '{prefix}' features survive the filter")
     out("pass      = admitted features with no mechanistic link that occur")
     out("            only in isolates already flagged by the rule")
     out()

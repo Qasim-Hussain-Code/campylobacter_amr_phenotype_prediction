@@ -39,7 +39,11 @@ RULE_PREFIX = {
 
 
 def main():
-    drug = sys.argv[1] if len(sys.argv) > 1 else "ciprofloxacin"
+    if len(sys.argv) < 2:
+        print(f"usage: 09_cross_validate.py <drug>   drugs: {', '.join(RULE_PREFIX)}",
+              file=sys.stderr)
+        sys.exit(2)
+    drug = sys.argv[1]
     slug = drug.replace(" ", "_")
 
     fx = PROCESSED / f"features_{slug}.parquet"

@@ -67,7 +67,11 @@ def file_mtime(path):
 
 
 def main():
-    drug = sys.argv[1] if len(sys.argv) > 1 else "tetracycline"
+    if len(sys.argv) < 2:
+        print("usage: 02_build_cohort.py <drug>   drugs: any name appearing in "
+              "AST_phenotypes, e.g. ciprofloxacin, tetracycline", file=sys.stderr)
+        sys.exit(2)
+    drug = sys.argv[1]
     slug = drug.replace(" ", "_")
 
     meta_path = RAW / f"{PDG}.metadata.tsv"

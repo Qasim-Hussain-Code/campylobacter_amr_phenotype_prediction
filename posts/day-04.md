@@ -64,8 +64,15 @@ Tomorrow.
 
 ---
 
-## Number and Metric Traceability
+Numbers in this post
 
-- **`blaOXA-493` co-occurrence (5 isolates carry it, 5 resistant, 100% carrying gyrA 86 rule):** `results/metrics/cross_validation_ciprofloxacin.txt` (Co-occurrence table: `blaOXA-493 n=5 P(rule|feat)=1.000`) & `results/metrics/variant_table_ciprofloxacin.txt` (`blaOXA-493  5  5  100.0%`).
-- **Equal coefficient weight (+2.364):** `results/metrics/model_results_ciprofloxacin.txt` (Grouped split: `+2.364 gyrA_T86V=POINT` and `+2.364 blaOXA-493`).
-- **Contingency table counts (Both=5, Mutation alone=818, Gene alone=0, Neither=3,161):** Derived from `results/metrics/cross_validation_ciprofloxacin.txt` and total cohort n=3,984 (Resistant=824, Susceptible=3,160).
+```
+five isolates carry it,       results/metrics/variant_table_ciprofloxacin.txt
+all five resistant            (blaOXA-493: n=5, R=5, 100.0%)
+every one also carries a      results/metrics/cross_validation_ciprofloxacin.txt
+gyrase mutation               (co-occurrence: blaOXA-493, P(rule|feat)=1.000)
+2.364 each                    results/metrics/model_results_ciprofloxacin.txt
+                              (grouped split)
+these 3,984                   results/metrics/cohort_summary_ciprofloxacin.txt
+Release                       PDG000000003.2859
+```

@@ -99,7 +99,11 @@ def cells(pred, y):
 
 
 def main():
-    drug = sys.argv[1] if len(sys.argv) > 1 else "tetracycline"
+    if len(sys.argv) < 2:
+        print("usage: 12_test_refined_features.py <drug>   drugs: ciprofloxacin, "
+              "nalidixic acid, tetracycline", file=sys.stderr)
+        sys.exit(2)
+    drug = sys.argv[1]
     slug = drug.replace(" ", "_")
 
     path = INTERIM / f"cohort_{slug}.parquet"

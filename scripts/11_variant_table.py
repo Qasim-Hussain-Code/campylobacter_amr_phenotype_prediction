@@ -39,7 +39,11 @@ def entries(genotypes):
 
 
 def main():
-    drug = sys.argv[1] if len(sys.argv) > 1 else "ciprofloxacin"
+    if len(sys.argv) < 2:
+        print(f"usage: 11_variant_table.py <drug>   drugs: "
+              f"{', '.join(DEFAULT_PREFIXES)}", file=sys.stderr)
+        sys.exit(2)
+    drug = sys.argv[1]
     slug = drug.replace(" ", "_")
     prefixes = sys.argv[2:] or DEFAULT_PREFIXES.get(drug, [])
 

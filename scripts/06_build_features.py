@@ -41,7 +41,11 @@ def entries(genotypes):
 
 
 def main():
-    drug = sys.argv[1] if len(sys.argv) > 1 else "ciprofloxacin"
+    if len(sys.argv) < 2:
+        print("usage: 06_build_features.py <drug> [min_count]   drugs: any cohort "
+              "built by 02_build_cohort.py", file=sys.stderr)
+        sys.exit(2)
+    drug = sys.argv[1]
     slug = drug.replace(" ", "_")
 
     path = INTERIM / f"cohort_{slug}.parquet"

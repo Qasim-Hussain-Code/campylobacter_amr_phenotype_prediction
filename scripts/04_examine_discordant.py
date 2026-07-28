@@ -46,7 +46,11 @@ def entries(genotypes):
 
 
 def main():
-    drug = sys.argv[1] if len(sys.argv) > 1 else "tetracycline"
+    if len(sys.argv) < 2:
+        print(f"usage: 04_examine_discordant.py <drug>   drugs: {', '.join(MARKERS)}",
+              file=sys.stderr)
+        sys.exit(2)
+    drug = sys.argv[1]
     slug = drug.replace(" ", "_")
 
     if drug not in MARKERS:

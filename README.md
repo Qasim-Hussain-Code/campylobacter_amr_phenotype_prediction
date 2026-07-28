@@ -22,13 +22,15 @@ Can the genome answer the question the plate answers?
 | Any substitution at gyrA 86 | 1 | 0.9967 | 13 |
 | Logistic regression (25-fold grouped CV) | 58 | 0.9960 | n/a |
 
-The cohort contains 3,984 isolates, 824 resistant and 3,160 susceptible (`results/metrics/cohort_summary_ciprofloxacin.txt`). The majority-class baseline is 824/3,984; the marker accuracy is exact on the full cohort (`results/metrics/marker_comparison_ciprofloxacin.txt`). The logistic regression figure is the mean accuracy over 25 grouped cross-validation folds (`results/metrics/cross_validation_ciprofloxacin.txt`).
+The cohort contains 3,984 isolates, 824 resistant and 3,160 susceptible (`results/metrics/cohort_summary_ciprofloxacin.txt`). The majority-class baseline is 824/3,984; the marker accuracy is exact on the full cohort, counting any of the four substitutions seen at gyrA 86, which are T86A, T86I, T86K and T86V (`results/metrics/marker_comparison_ciprofloxacin.txt`). The logistic regression figure is the mean accuracy over 25 grouped cross-validation folds at the default rarity threshold of 3, which admits 58 features (`results/metrics/cross_validation_ciprofloxacin.txt`).
+
+The 84 features of the headline are the full vocabulary, obtained by setting the rarity threshold to 1 so that every distinct gene entry is retained. Fitted on those, logistic regression reaches 0.9960 under random cross-validation and 0.9957 under grouped, against 0.9967 for the rule (`results/metrics/threshold_sweep_ciprofloxacin.txt`).
 
 Four results follow. Each is reproducible from the scripts here, and each number cites the file that produced it.
 
-**The result is stable under grouped splitting.** A stratified random split placed 344 SNP clusters on both sides of the train/test boundary; the grouped split placed zero (`results/metrics/split_summary_ciprofloxacin.txt`). The rule's mean accuracy was 0.9965 under both random and grouped 25-fold cross-validation (`results/metrics/cross_validation_ciprofloxacin.txt`). A model exploiting lineage would have dropped. This one predicts resistance in genetic backgrounds it never saw.
+**The result is stable under grouped splitting.** A stratified random split placed 344 SNP clusters on both sides of the train/test boundary; the grouped split placed zero (`results/metrics/split_summary_ciprofloxacin.txt`). The rule's mean accuracy was 0.9965 under both random and grouped 25-fold cross-validation (`results/metrics/cross_validation_ciprofloxacin.txt`). That figure is 0.9965 rather than the 0.9967 above because the cross-validated rule is built from the three substitutions that survive the default rarity threshold, T86A, T86I and T86V. The single isolate carrying T86K falls below the threshold and is missed, which costs one error. A model exploiting lineage would have dropped. This one predicts resistance in genetic backgrounds it never saw.
 
-**A beta-lactamase received the same weight as a real gyrase mutation.** In the grouped-split logistic regression, `gyrA_T86I` scored +8.845, `gyrA_T86V` scored +2.364, and `blaOXA-493` scored +2.364 (`results/metrics/model_results_ciprofloxacin.txt`, grouped split). `blaOXA-493` encodes an enzyme that cuts beta-lactam rings; ciprofloxacin has none. All five isolates carrying it also carry a gyrA 86 substitution, and no isolate in the cohort carries it alone (`results/metrics/cross_validation_ciprofloxacin.txt`, co-occurrence table). Nothing in the data measures its effect independently.
+**A beta-lactamase received the same weight as a real gyrase mutation.** In the grouped-split logistic regression, `gyrA_T86I` scored +8.845, `gyrA_T86V` scored +2.364, and `blaOXA-493` scored +2.364 (`results/metrics/model_results_ciprofloxacin.txt`, grouped split). `blaOXA-493` encodes an enzyme that cuts beta-lactam rings; ciprofloxacin has none. Every isolate carrying `blaOXA-493` also carries a gyrA 86 substitution: the co-occurrence table gives P(rule|feature) = 1.000 for it across all five (`results/metrics/cross_validation_ciprofloxacin.txt`). The gene never appears without the mutation, so nothing in the data measures its effect independently. (The `alone` column in `results/metrics/variant_table_ciprofloxacin.txt` reads 5 for this variant and answers a different question: whether an isolate carries any other variant from the same gene family. It says nothing about gyrA.)
 
 **An arbitrary rarity threshold deleted the best-supported feature.** An early version filtered out gene entries seen in fewer than 10 isolates. `gyrA_T86V` appears in 8 isolates, across 7 distinct SNP clusters, and is resistant in all of them (`results/metrics/variant_table_ciprofloxacin.txt`). It was removed silently, and no accuracy figure revealed it. `scripts/10_threshold_sweep.py` sweeps the threshold from 1 to 20; the rule's cross-validated accuracy ranges from 0.9954 to 0.9975 across grouped and random schemes (`results/metrics/threshold_sweep_ciprofloxacin.txt`), and the conclusion does not depend on the choice.
 
@@ -80,7 +82,11 @@ python scripts/11_variant_table.py ciprofloxacin
 python scripts/12_test_refined_features.py ciprofloxacin
 ```
 
-Every script takes the drug as its first argument and defaults sensibly. Substitute `tetracycline` to run the second cohort. Random seeds are fixed. Data downloads are idempotent and write through a `.part` file, so an interrupted download cannot masquerade as a complete one.
+Every script requires the drug as its first argument. None of them has a default. Run one without an argument and it prints a usage line naming the drugs it accepts, then exits 2. Earlier versions did have defaults, and because they disagreed with each other a bare run of the pipeline built one drug's cohort and modelled another, without failing anywhere. Substitute `tetracycline` to run the second cohort.
+
+Random seeds are fixed. Data downloads are idempotent and write through a `.part` file, so an interrupted download cannot masquerade as a complete one.
+
+The pipeline was rerun end to end for both drugs on 28 July 2026, under Python 3.11.15, pandas 2.2.3, scikit-learn 1.5.2 and numpy 1.26.4. Every file in `results/metrics/` regenerated byte-identically except the two provenance records, which carry the run date and therefore change on every run.
 
 
 ## Layout
@@ -97,9 +103,13 @@ results/
   figures/                    plots (gitignored, regenerable)
 posts/                        the LinkedIn series, verbatim, with the
                               file behind every number in each post
+notebooks/                    empty, reserved for later chapters
+models/                       empty, reserved for later chapters (gitignored)
 ```
 
 `results/metrics/` is deliberately tracked. Those files are small, and they are the record of what was claimed on which day.
+
+Eight of those files are cited nowhere above. They are the tetracycline outputs of scripts 04, 05, 08, 09 and 10, the tetracycline split summary and provenance record, and the ciprofloxacin discordance listing. Both drugs were run through the same pipeline; the tetracycline results are reported here only as far as the annotation-quality finding, and the rest is left in place so the record is complete rather than selective.
 
 
 ## Limitations
@@ -110,13 +120,17 @@ posts/                        the LinkedIn series, verbatim, with the
 
 **Features are bounded by the detection tool.** AMRFinderPlus reports what its reference database contains. Every gyrA point mutation observed here is at position 86, which reflects the database as much as the organism. Mechanisms absent from the catalogue are absent from the feature matrix.
 
-**Three refinements are underpowered.** Excluding `gyrA_T86A`, requiring intact *tet* calls, and treating `=PARTIAL_END_OF_CONTIG` as intact each move 2 to 5 isolates out of roughly 4,000. All three are mechanistically motivated, all three were suggested by reading this dataset, and the differences are smaller than the fold-to-fold variation (`results/metrics/refined_features_ciprofloxacin.txt`, `results/metrics/refined_features_tetracycline.txt`). They are hypotheses requiring independent confirmation, not established improvements.
+**Three refinements are underpowered.** Excluding `gyrA_T86A` reclassifies 4 isolates. Requiring intact *tet* calls reclassifies 5. Treating `=PARTIAL_END_OF_CONTIG` as broken rather than intact reclassifies 8, two of which become wrong. Each is a handful out of roughly 4,000 (`results/metrics/refined_features_ciprofloxacin.txt`, `results/metrics/refined_features_tetracycline.txt`).
+
+Both files report each difference as a ratio against fold-to-fold spread, where a value below about 1 cannot be told apart from noise. The `gyrA_T86A` exclusion scores 0.6 and the full-length *tet* definition 0.7, both below that line. Requiring intact *tet* calls scores 1.1, which sits at the boundary rather than beyond it. All three are mechanistically motivated and all three were suggested by reading this dataset. They are hypotheses requiring independent confirmation, not established improvements.
 
 **`gyrA_T86A` rests on two independent observations.** Four isolates carry it and all are susceptible, but three sit in the same SNP cluster (PDS000023369.33) with near-identical genotypes (`results/metrics/variant_table_ciprofloxacin.txt`). The effective sample size is closer to two than to four.
 
 **No external validation.** All figures come from one cohort. Cross-validation estimates variability within these data; it says nothing about another laboratory, another country, or another decade.
 
 **Cohort composition is uncharacterised.** This is surveillance data, aggregated from submitting laboratories. Its distribution across geography, isolation source, and collection year has not been analysed, and any of those could bias the result.
+
+**The environment is pinned to minor versions, not patch versions.** `envs/environment.yml` fixes pandas 2.2 and scikit-learn 1.5 but not the patch release, so a fresh install may resolve to different builds than the ones used here. The byte-identical rerun reported above is an observation from one machine on one day, not a guarantee that a reader will reproduce it exactly.
 
 
 ## Series
@@ -126,6 +140,18 @@ Part of Machine Learning for Biology. Chapter 1 covers supervised binary classif
 The posts in `posts/` are reproduced verbatim, including anything later found to be imprecise, with a footer on each mapping every figure to the file that produced it.
 
 
-## Licence
+## Licence and citation
 
 MIT. See `LICENSE`.
+
+If you use this repository, cite it together with the release it was built from, since the numbers belong to that snapshot and not to NCBI Pathogen Detection in general.
+
+```
+Hussain, Q. (2026). campylobacter_amr_phenotype_prediction: predicting
+ciprofloxacin and tetracycline resistance in Campylobacter jejuni from
+AMRFinderPlus genotypes and measured AST phenotypes. Chapter 1 of Machine
+Learning for Biology. NCBI Pathogen Detection release PDG000000003.2859.
+https://github.com/Qasim-Hussain-Code/campylobacter_amr_phenotype_prediction
+```
+
+The underlying data are from NCBI Pathogen Detection and carry their own terms. The MIT licence covers the code and the derived metrics files in this repository, not the source records.

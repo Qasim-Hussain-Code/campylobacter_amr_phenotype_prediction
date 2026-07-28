@@ -8,8 +8,12 @@ file that produced it.
 
 | File | Title |
 |---|---|
-| [day-01.md](file:///home/qasim/campylobacter_amr_phenotype_prediction/posts/day-01.md) | Day 1: Provenance and Forensic Bioinformatics |
-| [day-02.md](file:///home/qasim/campylobacter_amr_phenotype_prediction/posts/day-02.md) | Day 2: The Biological Target |
-| [day-03.md](file:///home/qasim/campylobacter_amr_phenotype_prediction/posts/day-03.md) | Day 3: Features, Labels, and Baselines |
-| [day-04.md](file:///home/qasim/campylobacter_amr_phenotype_prediction/posts/day-04.md) | Day 4: Confounding and Passenger Genes |
-| [day-05.md](file:///home/qasim/campylobacter_amr_phenotype_prediction/posts/day-05.md) | Day 5: Data Leakage and Grouped Splitting |
+| [day-01.md](day-01.md) | Day 1: Provenance and Forensic Bioinformatics |
+| [day-02.md](day-02.md) | Day 2: The Biological Target |
+| [day-03.md](day-03.md) | Day 3: Features, Labels, and Baselines |
+| [day-04.md](day-04.md) | Day 4: Confounding and Passenger Genes |
+| [day-05.md](day-05.md) | Day 5: Data Leakage and Grouped Splitting |
+
+Day 1 quotes no number produced by this repository. Days 2 to 5 do, and each
+footer names the file and, where it matters, the split scheme and rarity
+threshold the figure came from.

@@ -58,9 +58,20 @@ Tomorrow: the gene was there. The protein was not.
 
 ---
 
-## Number and Metric Traceability
+Numbers in this post
 
-- **3,984 isolates across 1,128 SNP clusters:** `results/metrics/cohort_summary_ciprofloxacin.txt`.
-- **Random split 344 clusters spanning both folds vs Grouped split 0 clusters spanning both folds:** `results/metrics/split_summary_ciprofloxacin.txt`.
-- **0.9965 rule accuracy across 25 random vs 25 grouped folds:** `results/metrics/cross_validation_ciprofloxacin.txt` (`Random folds: rule 0.9965`, `Grouped folds: rule 0.9965`).
-- **`blaOXA-493` logistic weight (1.469 random split vs 2.364 grouped split):** `results/metrics/model_results_ciprofloxacin.txt`.
+```
+3,984 isolates                results/metrics/cohort_summary_ciprofloxacin.txt
+1,128 clusters                results/metrics/cohort_summary_ciprofloxacin.txt
+train on three quarters       results/metrics/split_summary_ciprofloxacin.txt
+                              (test_fraction=0.25, seed=42)
+344 clusters in both halves   results/metrics/split_summary_ciprofloxacin.txt
+344 became zero               results/metrics/split_summary_ciprofloxacin.txt
+                              (grouped split: 0 clusters spanning both folds)
+repeated twenty five times    results/metrics/cross_validation_ciprofloxacin.txt
+0.9965 split, 0.9965 whole    (25 folds per scheme; the cross-validated rule
+                              covers T86A, T86I and T86V)
+1.469 in the random split     results/metrics/model_results_ciprofloxacin.txt
+2.364 in the grouped split    results/metrics/model_results_ciprofloxacin.txt
+Release                       PDG000000003.2859
+```

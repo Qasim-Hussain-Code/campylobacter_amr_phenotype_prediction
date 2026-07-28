@@ -11,7 +11,7 @@ Scheme:    5-fold x 3 repeats = 15 folds per scheme
   10     39          3     0.9920    0.9930    0.9920    0.9930     5
   20     26          1     0.9930    0.9930    0.9930    0.9930     1
 
-rule cols = how many gyrA position-86 features survive the filter
+rule cols = how many 'tet(' features survive the filter
 pass      = admitted features with no mechanistic link that occur
             only in isolates already flagged by the rule
 

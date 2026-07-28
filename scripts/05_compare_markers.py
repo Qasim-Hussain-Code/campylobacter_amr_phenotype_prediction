@@ -62,7 +62,11 @@ def evaluate(df, drug, prefixes):
 
 
 def main():
-    drug = sys.argv[1] if len(sys.argv) > 1 else "ciprofloxacin"
+    if len(sys.argv) < 2:
+        print(f"usage: 05_compare_markers.py <drug>   drugs: {', '.join(CANDIDATES)}",
+              file=sys.stderr)
+        sys.exit(2)
+    drug = sys.argv[1]
     slug = drug.replace(" ", "_")
 
     if drug not in CANDIDATES:

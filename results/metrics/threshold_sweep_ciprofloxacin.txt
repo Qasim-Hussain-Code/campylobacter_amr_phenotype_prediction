@@ -11,7 +11,7 @@ Scheme:    5-fold x 3 repeats = 15 folds per scheme
   10     39          1     0.9955    0.9955    0.9954    0.9954     0
   20     26          1     0.9955    0.9955    0.9954    0.9954     0
 
-rule cols = how many gyrA position-86 features survive the filter
+rule cols = how many 'gyrA_T86' features survive the filter
 pass      = admitted features with no mechanistic link that occur
             only in isolates already flagged by the rule
 
