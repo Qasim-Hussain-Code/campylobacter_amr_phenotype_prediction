@@ -144,14 +144,4 @@ The posts in `posts/` are reproduced verbatim, including anything later found to
 
 MIT. See `LICENSE`.
 
-If you use this repository, cite it together with the release it was built from, since the numbers belong to that snapshot and not to NCBI Pathogen Detection in general.
-
-```
-Hussain, Q. (2026). campylobacter_amr_phenotype_prediction: predicting
-ciprofloxacin and tetracycline resistance in Campylobacter jejuni from
-AMRFinderPlus genotypes and measured AST phenotypes. Chapter 1 of Machine
-Learning for Biology. NCBI Pathogen Detection release PDG000000003.2859.
-https://github.com/Qasim-Hussain-Code/campylobacter_amr_phenotype_prediction
-```
-
 The underlying data are from NCBI Pathogen Detection and carry their own terms. The MIT licence covers the code and the derived metrics files in this repository, not the source records.
