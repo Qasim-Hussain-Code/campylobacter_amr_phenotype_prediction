@@ -1,3 +1,4 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./license)
 # campylobacter_amr_phenotype_prediction
 
 Predicting antimicrobial resistance in *Campylobacter jejuni* from genomic features, using phenotypes measured on a plate rather than inferred from sequence.
