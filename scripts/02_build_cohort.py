@@ -122,6 +122,16 @@ def main():
     print(f"[join] {missing:,} isolates have no SNP cluster")
 
     assert cohort["asm_acc"].is_unique, "duplicate assembly accessions"
+    # Susceptibility panels carry codes beyond S, I and R. ND means the
+    # test ran and returned no usable answer, so the isolate has no label
+    # and cannot enter a supervised problem. Reported, not dropped quietly.
+    INTERPRETABLE = {"S", "I", "R"}
+    unusable = cohort[~cohort[drug].isin(INTERPRETABLE)]
+    if len(unusable):
+        print(f"[filt] dropping {len(unusable):,} with no interpretable call:")
+        print(unusable[drug].value_counts().to_string())
+        cohort = cohort[cohort[drug].isin(INTERPRETABLE)].copy()
+
     assert cohort[drug].isin(["S", "I", "R"]).all(), "unexpected phenotype code"
 
     n_intermediate = (cohort[drug] == "I").sum()
